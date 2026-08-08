@@ -15,7 +15,7 @@ import {
 
 export const PERSONAL_DETAILS = {
   name: 'Nitin Kumar Mandal',
-  profileImage: 'profilepic.jpeg',
+  profileImage: '/profilepic.jpeg',
   roles: [
     'Computer Science Engineering Student',
     'Full Stack Web Developer',
