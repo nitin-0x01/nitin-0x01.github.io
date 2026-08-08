@@ -23,84 +23,109 @@ export const Education: React.FC = () => {
 
         {/* Vertical Animated Timeline */}
         <div className="relative border-l-2 border-purple-500/30 ml-4 md:ml-32 space-y-12">
-          {EDUCATION_DATA.map((item, index) => (
-            <motion.div
-              key={item.id}
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.15 }}
-              className="relative pl-8 md:pl-12 group"
-            >
-              {/* Timeline Glowing Node Marker */}
-              <div className="absolute -left-[17px] top-1.5 w-8 h-8 rounded-full bg-gray-950 border-2 border-purple-500 flex items-center justify-center text-purple-400 shadow-[0_0_15px_rgba(168,85,247,0.6)] group-hover:scale-125 transition">
-                <GraduationCap className="w-4 h-4" />
-              </div>
+          {EDUCATION_DATA.map((item, index) => {
+            const period = item.period || item.duration || 'Present';
+            const location = item.location || item.institution || 'Remote';
+            const grade = item.grade || item.status || 'In Progress';
+            const highlights = item.highlights || item.achievements || [];
+            const skills = item.skills || item.skillsLearned || [];
+            const courseList = item.courses || [];
+            const key = item.id || `${item.degree}-${index}`;
 
-              {/* Time Period Tag on Desktop Left */}
-              <div className="hidden md:block absolute -left-36 top-2 text-xs font-mono font-bold text-purple-400 text-right w-28">
-                {item.period}
-              </div>
-
-              {/* Content Card */}
-              <div className="bg-gray-950/70 border border-purple-500/20 rounded-3xl p-6 sm:p-8 backdrop-blur-xl hover:border-purple-500/50 transition duration-300 shadow-[0_0_30px_rgba(0,0,0,0.5)] space-y-4">
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-gray-800 pb-4">
-                  <div>
-                    <span className="md:hidden inline-block text-xs font-mono text-purple-400 font-bold mb-1">
-                      {item.period}
-                    </span>
-                    <h3 className="text-xl font-extrabold text-white">{item.degree}</h3>
-                    <p className="text-sm font-semibold text-purple-300 mt-0.5">{item.institution}</p>
-                  </div>
-
-                  <div className="flex flex-wrap items-center gap-2">
-                    <span className="flex items-center gap-1 px-3 py-1 rounded-full text-xs font-mono bg-gray-900 border border-gray-800 text-gray-300">
-                      <MapPin className="w-3.5 h-3.5 text-purple-400" />
-                      {item.location}
-                    </span>
-                    {item.grade && (
-                      <span className="px-3 py-1 rounded-full text-xs font-mono bg-cyan-950/80 border border-cyan-500/40 text-cyan-300 font-bold">
-                        {item.grade}
-                      </span>
-                    )}
-                  </div>
+            return (
+              <motion.div
+                key={key}
+                initial={{ opacity: 0, x: -30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.15 }}
+                className="relative pl-8 md:pl-12 group"
+              >
+                <div className="absolute -left-[17px] top-1.5 w-8 h-8 rounded-full bg-gray-950 border-2 border-purple-500 flex items-center justify-center text-purple-400 shadow-[0_0_15px_rgba(168,85,247,0.6)] group-hover:scale-125 transition">
+                  <GraduationCap className="w-4 h-4" />
                 </div>
 
-                <p className="text-gray-300 text-sm leading-relaxed">
-                  {item.description}
-                </p>
+                <div className="hidden md:block absolute -left-36 top-2 text-xs font-mono font-bold text-purple-400 text-right w-28">
+                  {period}
+                </div>
 
-                {/* Achievements List */}
-                {item.achievements && item.achievements.length > 0 && (
-                  <div className="space-y-1.5 pt-2">
-                    <div className="text-xs font-bold uppercase tracking-wider text-yellow-400 flex items-center gap-1.5">
-                      <Award className="w-3.5 h-3.5" /> Highlights & Honors
+                <div className="bg-gray-950/70 border border-purple-500/20 rounded-3xl p-6 sm:p-8 backdrop-blur-xl hover:border-purple-500/50 transition duration-300 shadow-[0_0_30px_rgba(0,0,0,0.5)] space-y-4">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-gray-800 pb-4">
+                    <div>
+                      <span className="md:hidden inline-block text-xs font-mono text-purple-400 font-bold mb-1">
+                        {period}
+                      </span>
+                      <h3 className="text-xl font-extrabold text-white">{item.degree}</h3>
+                      <p className="text-sm font-semibold text-purple-300 mt-0.5">{item.institution}</p>
                     </div>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                      {item.achievements.map((ach, idx) => (
-                        <div key={idx} className="flex items-start gap-2 text-xs text-gray-300 bg-gray-900/60 p-2.5 rounded-xl border border-gray-800">
-                          <CheckCircle2 className="w-3.5 h-3.5 text-cyan-400 shrink-0 mt-0.5" />
-                          <span>{ach}</span>
-                        </div>
+
+                    <div className="flex flex-wrap items-center gap-2">
+                      <span className="flex items-center gap-1 px-3 py-1 rounded-full text-xs font-mono bg-gray-900 border border-gray-800 text-gray-300">
+                        <MapPin className="w-3.5 h-3.5 text-purple-400" />
+                        {location}
+                      </span>
+                      {grade && (
+                        <span className="px-3 py-1 rounded-full text-xs font-mono bg-cyan-950/80 border border-cyan-500/40 text-cyan-300 font-bold">
+                          {grade}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+
+                  <p className="text-gray-300 text-sm leading-relaxed">
+                    {item.description}
+                  </p>
+
+                  {courseList.length > 0 && (
+                    <div className="space-y-2 pt-2">
+                      <div className="text-xs font-bold uppercase tracking-wider text-yellow-400 flex items-center gap-1.5">
+                        <Award className="w-3.5 h-3.5" /> Courses
+                      </div>
+                      <div className="flex flex-wrap gap-2">
+                        {courseList.map((course, idx) => (
+                          <span
+                            key={`${course}-${idx}`}
+                            className="px-3 py-1 rounded-lg text-xs font-mono bg-gray-900 border border-gray-800 text-cyan-300"
+                          >
+                            {course}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {highlights.length > 0 && (
+                    <div className="space-y-1.5 pt-2">
+                      <div className="text-xs font-bold uppercase tracking-wider text-yellow-400 flex items-center gap-1.5">
+                        <Award className="w-3.5 h-3.5" /> Highlights & Honors
+                      </div>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        {highlights.map((ach, idx) => (
+                          <div key={`${ach}-${idx}`} className="flex items-start gap-2 text-xs text-gray-300 bg-gray-900/60 p-2.5 rounded-xl border border-gray-800">
+                            <CheckCircle2 className="w-3.5 h-3.5 text-cyan-400 shrink-0 mt-0.5" />
+                            <span>{ach}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {skills.length > 0 && (
+                    <div className="flex flex-wrap gap-2 pt-2">
+                      {skills.map((s, idx) => (
+                        <span
+                          key={`${s}-${idx}`}
+                          className="px-3 py-1 rounded-lg text-xs font-mono bg-gray-900 border border-gray-800 text-purple-300"
+                        >
+                          {s}
+                        </span>
                       ))}
                     </div>
-                  </div>
-                )}
-
-                {/* Skills Badges */}
-                <div className="flex flex-wrap gap-2 pt-2">
-                  {item.skillsLearned.map((s) => (
-                    <span
-                      key={s}
-                      className="px-3 py-1 rounded-lg text-xs font-mono bg-gray-900 border border-gray-800 text-purple-300"
-                    >
-                      {s}
-                    </span>
-                  ))}
+                  )}
                 </div>
-              </div>
-            </motion.div>
-          ))}
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </section>
