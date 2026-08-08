@@ -137,3 +137,14 @@ export const ACHIEVEMENTS_DATA = [
 ];
 
 export const SKILLS_DATA = SKILL_CATEGORIES;
+
+export const EXPERIENCE_DATA = [
+  {
+    company: "Personal Projects & Academic Development",
+    role: "Full-Stack Developer",
+    duration: "2025 - Present",
+    description: "Architected and built full-stack applications including RideTogether, CampusPulse, and NEPSE Calculator using React, Node.js, and Firebase."
+  }
+];
+
+export const CERTIFICATES_DATA = [];
