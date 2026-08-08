@@ -43,16 +43,12 @@ export const EDUCATION_DATA = [
     courses: [
       "Data Structures & Algorithms",
       "Object Oriented Programming (Java/C++)",
-      "Linear Algebra & Differential Calculus",
-      "Database Management Systems",
-      "Web Technologies"
+      "Database Management Systems"
     ],
     highlights: [
-      "Symbiosis Institute of Technology (SIT), Pune",
       "Core Computer Science & Engineering Curriculum",
-      "Full-Stack Web Application Development Focus"
-    ],
-    skills: ["C", "C++", "Java", "Python", "JavaScript", "React", "Firebase"]
+      "Symbiosis Institute of Technology (SIT), Pune"
+    ]
   }
 ];
 
@@ -84,20 +80,18 @@ export const SKILL_CATEGORIES = [
   {
     category: "Areas of Interest",
     name: "Areas of Interest",
-    skills: ["Full-Stack Web Development", "Artificial Intelligence", "Cybersecurity", "Software Development", "UI/UX Design"],
-    items: ["Full-Stack Web Development", "Artificial Intelligence", "Cybersecurity", "Software Development", "UI/UX Design"]
+    skills: ["Full-Stack", "AI", "Cybersecurity", "UI/UX"],
+    items: ["Full-Stack", "AI", "Cybersecurity", "UI/UX"]
   }
 ];
-
-export const SKILLS_DATA = SKILL_CATEGORIES;
 
 export const PROJECTS_DATA = [
   {
     id: "ride-together",
     title: "RideTogether",
-    description: "A group travel coordination and carpooling platform designed to simplify ride sharing and logistics for campus groups.",
-    techStack: ["React", "Android Studio", "Firebase", "Firestore", "Tailwind CSS"],
-    technologies: ["React", "Android Studio", "Firebase", "Firestore", "Tailwind CSS"],
+    description: "Group travel coordination and carpooling platform.",
+    techStack: ["React", "Android Studio", "Firebase"],
+    technologies: ["React", "Android Studio", "Firebase"],
     githubUrl: "https://github.com/nitin-0x01/RideTogether",
     liveUrl: "https://nitinkumarmandal.com.np",
     featured: true
@@ -105,9 +99,9 @@ export const PROJECTS_DATA = [
   {
     id: "campus-pulse",
     title: "CampusPulse",
-    description: "A web-based hostel management system featuring administrative dashboards, student activity tracking, and request handling.",
-    techStack: ["React", "Node.js", "Firebase", "Tailwind CSS"],
-    technologies: ["React", "Node.js", "Firebase", "Tailwind CSS"],
+    description: "Web-based hostel management system.",
+    techStack: ["React", "Node.js", "Firebase", "Tailwind"],
+    technologies: ["React", "Node.js", "Firebase", "Tailwind"],
     githubUrl: "https://github.com/sandycodes2205/CampusPulse",
     liveUrl: "https://nitinkumarmandal.com.np",
     featured: true
@@ -115,144 +109,45 @@ export const PROJECTS_DATA = [
   {
     id: "nepse-calculator",
     title: "NEPSE Calculator",
-    description: "A financial utility tool designed for technical analysis, stock profit calculations, and transaction fee estimations for NEPSE trading.",
-    techStack: ["JavaScript", "HTML5", "CSS3", "React"],
-    technologies: ["JavaScript", "HTML5", "CSS3", "React"],
+    description: "Financial utility tool for NEPSE trading analysis.",
+    techStack: ["JavaScript", "HTML5", "React"],
+    technologies: ["JavaScript", "HTML5", "React"],
     githubUrl: "https://github.com/nitin-0x01/Nepse-Calculator",
     liveUrl: "https://nitinkumarmandal.com.np",
     featured: true
-  },
-  {
-    id: "biyaj-calculator",
-    title: "Biyaj Calculator",
-    description: "A financial interest calculation tool built to compute compound and simple interest rates tailored for local financial modeling.",
-    techStack: ["JavaScript", "HTML5", "CSS3"],
-    technologies: ["JavaScript", "HTML5", "CSS3"],
-    githubUrl: "https://github.com/nitin-0x01",
-    liveUrl: "https://nitinkumarmandal.com.np",
-    featured: false
-  },
-  {
-    id: "dhanusha-science-campus",
-    title: "Dhanusha Science Campus Portal",
-    description: "A modern college web portal concept containing academic details, department portals, facilities, and notice boards.",
-    techStack: ["HTML5", "CSS3", "JavaScript"],
-    technologies: ["HTML5", "CSS3", "JavaScript"],
-    githubUrl: "https://github.com/nitin-0x01/Dhanusha",
-    liveUrl: "https://nitinkumarmandal.com.np",
-    featured: false
-  },
-  {
-    id: "personal-portfolio",
-    title: "Personal Portfolio Website",
-    description: "A modern developer portfolio showcasing real projects, skills, education, and links with custom domain deployment.",
-    techStack: ["React", "TypeScript", "Vite", "Tailwind CSS"],
-    technologies: ["React", "TypeScript", "Vite", "Tailwind CSS"],
-    githubUrl: "https://github.com/nitin-0x01/nitin-0x01.github.io",
-    liveUrl: "https://nitinkumarmandal.com.np",
-    featured: false
   }
 ];
 
 export const ACHIEVEMENTS_DATA = [
   {
     title: "SIT Pune Engineering Student",
-    description: "B.Tech Computer Science & Engineering student at Symbiosis Institute of Technology, Pune.",
+    description: "B.Tech Computer Science & Engineering.",
     date: "2025 - Present"
-  },
-  {
-    title: "Full-Stack Project Architect",
-    description: "Designed and deployed RideTogether (Group Travel App) and CampusPulse (Hostel System).",
-    date: "2026"
-  },
-  {
-    title: "Financial Utility Developer",
-    description: "Built stock analysis tools including NEPSE Calculator and Biyaj Calculator.",
-    date: "2026"
   }
 ];
 
 export const EXPERIENCE_DATA = [
   {
-    company: "Personal Projects & Academic Development",
+    company: "Academic Projects",
     role: "Full-Stack Developer",
     duration: "2025 - Present",
-    description: "Architected and built full-stack applications including RideTogether, CampusPulse, and NEPSE Calculator using React, Node.js, and Firebase.",
-    technologies: ["React", "TypeScript", "Firebase", "Node.js"]
+    description: "Built RideTogether, CampusPulse, and NEPSE Calculator.",
+    technologies: ["React", "Firebase", "Node.js"]
   }
-];
+);
 
-export const CERTIFICATES_DATA = [
-  {
-    title: "B.Tech Computer Science & Engineering",
-    issuer: "Symbiosis Institute of Technology (SIT), Pune",
-    date: "2025 - 2029",
-    url: "https://nitinkumarmandal.com.np"
-  }
-];
+export const CERTIFICATES_DATA = [];
+export const CODING_PROFILES_DATA = [];
+export const TESTIMONIALS_DATA = [];
+export const BLOGS_DATA = [];
+export const SERVICES_DATA = [];
+export const GALLERY_DATA = [];
+export const GOALS_DATA = [];
 
-export const CODING_PROFILES_DATA = [
-  {
-    platform: "GitHub",
-    username: "nitin-0x01",
-    url: "https://github.com/nitin-0x01"
-  },
-  {
-    platform: "LeetCode",
-    username: "nitin-0x01",
-    url: "https://leetcode.com"
-  }
-];
-
-export const TESTIMONIALS_DATA = [
-  {
-    name: "Academic Peer",
-    role: "Developer",
-    content: "Collaborated on core software and web projects.",
-    avatar: "/profilepic.jpeg"
-  }
-];
-
-export const BLOGS_DATA = [
-  {
-    title: "Building Full Stack Apps",
-    date: "2026",
-    summary: "Insights into modern Web Dev and React architectures.",
-    tags: ["React", "WebDev"],
-    url: "https://nitinkumarmandal.com.np"
-  }
-];
-
-export const SERVICES_DATA = [
-  {
-    title: "Web Development",
-    description: "Building modern responsive web applications.",
-    icon: "code"
-  }
-];
-
-export const GALLERY_DATA = [
-  {
-    title: "Portfolio Development",
-    image: "/profilepic.jpeg",
-    category: "Development"
-  }
-];
-
-export const GOALS_DATA = [
-  {
-    goal: "Master Advanced Software Systems & Cybersecurity",
-    status: "In Progress"
-  }
-];
-
-// Structural Aliases
+// Fallback exports required by some template components
+export const SKILLS_DATA = SKILL_CATEGORIES;
 export const PROJECTS = PROJECTS_DATA;
-export const EDUCATION = EDUCATION_DATA;
 export const EXPERIENCE = EXPERIENCE_DATA;
+export const EDUCATION = EDUCATION_DATA;
 export const ACHIEVEMENTS = ACHIEVEMENTS_DATA;
 export const CERTIFICATES = CERTIFICATES_DATA;
-export const SKILLS = SKILLS_DATA;
-export const SERVICES = SERVICES_DATA;
-export const BLOGS = BLOGS_DATA;
-export const TESTIMONIALS = TESTIMONIALS_DATA;
