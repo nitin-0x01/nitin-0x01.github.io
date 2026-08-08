@@ -135,3 +135,5 @@ export const ACHIEVEMENTS_DATA = [
   "Developed and maintained an active personal developer portfolio with custom domain integration.",
   "Hands-on expertise across full-stack development tools including React, TypeScript, Firebase, and Android Studio."
 ];
+
+export const SKILLS_DATA = SKILL_CATEGORIES;
