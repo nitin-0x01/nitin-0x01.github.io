@@ -39,7 +39,20 @@ export const EDUCATION_DATA = [
     degree: "B.Tech in Computer Science & Engineering",
     duration: "2025 - 2029",
     description: "Focusing on Software Engineering, Web Development, Algorithmic Foundations, Artificial Intelligence, and Cybersecurity.",
-    status: "In Progress"
+    status: "In Progress",
+    courses: [
+      "Data Structures & Algorithms",
+      "Object Oriented Programming (Java/C++)",
+      "Linear Algebra & Differential Calculus",
+      "Database Management Systems",
+      "Web Technologies"
+    ],
+    highlights: [
+      "Symbiosis Institute of Technology (SIT), Pune",
+      "Core Computer Science & Engineering Curriculum",
+      "Full-Stack Web Application Development Focus"
+    ],
+    skills: ["C", "C++", "Java", "Python", "JavaScript", "React", "Firebase"]
   }
 ];
 
