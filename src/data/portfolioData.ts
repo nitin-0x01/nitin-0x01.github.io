@@ -147,13 +147,19 @@ export const ACHIEVEMENTS_DATA = [
 
 export const EXPERIENCE_DATA = [
   {
-    company: "Academic Projects",
+    company: "Academic Projects & Development",
     role: "Full-Stack Developer",
     duration: "2025 - Present",
-    description: "Built RideTogether, CampusPulse, and NEPSE Calculator.",
-    technologies: ["React", "Firebase", "Node.js"]
+    description: [
+      "Architected and built full-stack applications including RideTogether, CampusPulse, and NEPSE Calculator.",
+      "Integrated React, Node.js, Firebase, and Tailwind CSS for scalable web and mobile solutions.",
+      "Engineered financial tools like Biyaj Calculator and custom campus portals."
+    ],
+    technologies: ["React", "TypeScript", "Firebase", "Node.js", "Tailwind CSS"]
   }
 ];
+
+export const EXPERIENCE = EXPERIENCE_DATA;
 
 export const CERTIFICATES_DATA = [];
 export const CODING_PROFILES_DATA = [];

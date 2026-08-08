@@ -60,17 +60,17 @@ export const ExperienceTimeline: React.FC = () => {
 
               {/* Bullet Descriptions */}
               <div className="space-y-2 pt-2">
-                {exp.description.map((bullet, idx) => (
+                {(Array.isArray(exp.description) ? exp.description : [exp.description]).map((bullet, idx) => (
                   <div key={idx} className="flex items-start gap-3 text-xs sm:text-sm text-gray-300">
                     <CheckCircle2 className="w-4 h-4 text-cyan-400 shrink-0 mt-1" />
-                    <span className="leading-relaxed">{bullet}</span>
+                    <span className="leading-relaxed">{bullet || ''}</span>
                   </div>
                 ))}
               </div>
 
               {/* Tech Badges */}
               <div className="flex flex-wrap gap-2 pt-2">
-                {exp.technologies.map((tech) => (
+                {(Array.isArray(exp.technologies) ? exp.technologies : []).map((tech) => (
                   <span
                     key={tech}
                     className="px-3 py-1 rounded-lg text-xs font-mono bg-gray-900 border border-gray-800 text-purple-300"
