@@ -56,32 +56,51 @@ export const SKILL_CATEGORIES = [
   {
     category: "Programming Languages",
     name: "Programming Languages",
-    skills: ["C", "C++", "Java", "Python", "JavaScript", "TypeScript"],
+    skills: [
+      { name: "C", level: "Intermediate" },
+      { name: "C++", level: "Intermediate" },
+      { name: "Java", level: "Intermediate" },
+      { name: "Python", level: "Intermediate" },
+      { name: "JavaScript", level: "Advanced" },
+      { name: "TypeScript", level: "Intermediate" }
+    ],
     items: ["C", "C++", "Java", "Python", "JavaScript", "TypeScript"]
   },
   {
     category: "Web Development",
     name: "Web Development",
-    skills: ["HTML5", "CSS3", "JavaScript", "React", "Node.js", "Tailwind CSS"],
+    skills: [
+      { name: "HTML5", level: "Advanced" },
+      { name: "CSS3", level: "Advanced" },
+      { name: "JavaScript", level: "Advanced" },
+      { name: "React", level: "Advanced" },
+      { name: "Node.js", level: "Intermediate" },
+      { name: "Tailwind CSS", level: "Advanced" }
+    ],
     items: ["HTML5", "CSS3", "JavaScript", "React", "Node.js", "Tailwind CSS"]
   },
   {
     category: "Tools & Technologies",
     name: "Tools & Technologies",
-    skills: ["Git", "GitHub", "VS Code", "Vite", "Firebase", "Android Studio"],
+    skills: [
+      { name: "Git", level: "Advanced" },
+      { name: "GitHub", level: "Advanced" },
+      { name: "VS Code", level: "Advanced" },
+      { name: "Vite", level: "Intermediate" },
+      { name: "Firebase", level: "Intermediate" },
+      { name: "Android Studio", level: "Intermediate" }
+    ],
     items: ["Git", "GitHub", "VS Code", "Vite", "Firebase", "Android Studio"]
   },
   {
     category: "Databases",
     name: "Databases",
-    skills: ["MySQL", "Firebase / Firestore", "MongoDB"],
+    skills: [
+      { name: "MySQL", level: "Intermediate" },
+      { name: "Firebase / Firestore", level: "Intermediate" },
+      { name: "MongoDB", level: "Learning" }
+    ],
     items: ["MySQL", "Firebase / Firestore", "MongoDB"]
-  },
-  {
-    category: "Areas of Interest",
-    name: "Areas of Interest",
-    skills: ["Full-Stack", "AI", "Cybersecurity", "UI/UX"],
-    items: ["Full-Stack", "AI", "Cybersecurity", "UI/UX"]
   }
 ];
 

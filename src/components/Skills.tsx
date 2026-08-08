@@ -17,17 +17,30 @@ export const Skills: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [searchQuery, setSearchQuery] = useState('');
 
-  const categories = ['All', ...SKILLS_DATA.map(c => c.categoryName)];
+  const categories = ['All', ...SKILLS_DATA.map((c) => c?.categoryName || c?.name || c?.category || 'General')];
 
-  // Flatten and filter skills
-  const allSkills = SKILLS_DATA.flatMap(c =>
-    c.skills.map(s => ({ ...s, categoryName: c.categoryName }))
-  );
+  const allSkills = SKILLS_DATA.flatMap((category) => {
+    const categoryName = category?.categoryName || category?.name || category?.category || 'General';
+    const skills = Array.isArray(category?.skills) ? category.skills : [];
 
-  const filteredSkills = allSkills.filter(s => {
-    const matchesCategory = selectedCategory === 'All' || s.categoryName === selectedCategory;
-    const matchesSearch = s.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                          s.categoryName.toLowerCase().includes(searchQuery.toLowerCase());
+    return skills.map((skill) => ({
+      ...skill,
+      categoryName,
+      name: skill?.name || '',
+      level: Number(skill?.level ?? 0),
+      experience: skill?.experience || 'Learning',
+      color: skill?.color || '#8b5cf6',
+      popular: Boolean(skill?.popular)
+    }));
+  });
+
+  const filteredSkills = allSkills.filter((skill) => {
+    const skillName = (skill?.name || '').toLowerCase();
+    const categoryName = (skill?.categoryName || '').toLowerCase();
+    const query = (searchQuery || '').toLowerCase();
+
+    const matchesCategory = selectedCategory === 'All' || skill?.categoryName === selectedCategory;
+    const matchesSearch = skillName.includes(query) || categoryName.includes(query);
     return matchesCategory && matchesSearch;
   });
 
@@ -82,58 +95,63 @@ export const Skills: React.FC = () => {
 
         {/* Skills Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredSkills.map((skill, index) => (
-            <motion.div
-              key={skill.name}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: index * 0.05 }}
-              className="group bg-gray-950/70 border border-purple-500/20 hover:border-purple-500/60 rounded-2xl p-5 backdrop-blur-xl transition duration-300 shadow-[0_0_20px_rgba(0,0,0,0.5)] hover:-translate-y-1 space-y-4"
-            >
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div
-                    className="w-10 h-10 rounded-xl flex items-center justify-center font-bold text-sm bg-gray-900 border border-gray-800 group-hover:scale-110 transition"
-                    style={{ color: skill.color }}
-                  >
-                    {skill.name.substring(0, 2).toUpperCase()}
+          {filteredSkills.map((skill, index) => {
+            const skillName = skill?.name || 'Skill';
+            const displayLevel = Number(skill?.level ?? 0);
+            const currentColor = skill?.color || '#8b5cf6';
+
+            return (
+              <motion.div
+                key={`${skillName}-${index}`}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: index * 0.05 }}
+                className="group bg-gray-950/70 border border-purple-500/20 hover:border-purple-500/60 rounded-2xl p-5 backdrop-blur-xl transition duration-300 shadow-[0_0_20px_rgba(0,0,0,0.5)] hover:-translate-y-1 space-y-4"
+              >
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div
+                      className="w-10 h-10 rounded-xl flex items-center justify-center font-bold text-sm bg-gray-900 border border-gray-800 group-hover:scale-110 transition"
+                      style={{ color: currentColor }}
+                    >
+                      {(skillName || 'SK').substring(0, 2).toUpperCase()}
+                    </div>
+                    <div>
+                      <h3 className="text-base font-bold text-white group-hover:text-purple-300 transition flex items-center gap-1.5">
+                        <span>{skillName}</span>
+                        {skill?.popular && (
+                          <span className="text-[10px] px-2 py-0.5 rounded-full bg-cyan-950 text-cyan-300 border border-cyan-800/60 font-mono">
+                            Core
+                          </span>
+                        )}
+                      </h3>
+                      <p className="text-xs text-gray-400 font-mono">{skill?.experience || 'Learning'}</p>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="text-base font-bold text-white group-hover:text-purple-300 transition flex items-center gap-1.5">
-                      <span>{skill.name}</span>
-                      {skill.popular && (
-                        <span className="text-[10px] px-2 py-0.5 rounded-full bg-cyan-950 text-cyan-300 border border-cyan-800/60 font-mono">
-                          Core
-                        </span>
-                      )}
-                    </h3>
-                    <p className="text-xs text-gray-400 font-mono">{skill.experience}</p>
-                  </div>
+
+                  <span className="text-sm font-black font-mono text-cyan-300">
+                    {displayLevel}%
+                  </span>
                 </div>
 
-                <span className="text-sm font-black font-mono text-cyan-300">
-                  {skill.level}%
-                </span>
-              </div>
+                <div className="w-full h-2 bg-gray-900 rounded-full overflow-hidden border border-gray-800">
+                  <motion.div
+                    initial={{ width: 0 }}
+                    whileInView={{ width: `${displayLevel}%` }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 1, delay: 0.2 }}
+                    className="h-full bg-gradient-to-r from-purple-600 via-indigo-500 to-cyan-400 rounded-full shadow-[0_0_10px_rgba(56,189,248,0.5)]"
+                  />
+                </div>
 
-              {/* Animated Level Bar */}
-              <div className="w-full h-2 bg-gray-900 rounded-full overflow-hidden border border-gray-800">
-                <motion.div
-                  initial={{ width: 0 }}
-                  whileInView={{ width: `${skill.level}%` }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 1, delay: 0.2 }}
-                  className="h-full bg-gradient-to-r from-purple-600 via-indigo-500 to-cyan-400 rounded-full shadow-[0_0_10px_rgba(56,189,248,0.5)]"
-                />
-              </div>
-
-              <div className="flex justify-between items-center text-[11px] text-gray-500 font-mono">
-                <span>Category: {skill.categoryName}</span>
-                <span className="text-purple-400 font-semibold">Proficient</span>
-              </div>
-            </motion.div>
-          ))}
+                <div className="flex justify-between items-center text-[11px] text-gray-500 font-mono">
+                  <span>Category: {skill?.categoryName || 'General'}</span>
+                  <span className="text-purple-400 font-semibold">Proficient</span>
+                </div>
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </section>
