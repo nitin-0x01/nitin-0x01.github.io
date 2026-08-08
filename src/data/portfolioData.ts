@@ -172,7 +172,6 @@ export const GOALS_DATA = [];
 // Fallback exports required by some template components
 export const SKILLS_DATA = SKILL_CATEGORIES;
 export const PROJECTS = PROJECTS_DATA;
-export const EXPERIENCE = EXPERIENCE_DATA;
 export const EDUCATION = EDUCATION_DATA;
 export const ACHIEVEMENTS = ACHIEVEMENTS_DATA;
 export const CERTIFICATES = CERTIFICATES_DATA;
