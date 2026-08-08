@@ -134,7 +134,7 @@ export const EXPERIENCE_DATA = [
     description: "Built RideTogether, CampusPulse, and NEPSE Calculator.",
     technologies: ["React", "Firebase", "Node.js"]
   }
-);
+];
 
 export const CERTIFICATES_DATA = [];
 export const CODING_PROFILES_DATA = [];
