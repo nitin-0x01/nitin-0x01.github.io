@@ -23,6 +23,8 @@ import {
   ACHIEVEMENTS_DATA
 } from '../../data/portfolioData';
 
+const educationDuration = EDUCATION_DATA[0]?.duration || '2025 - 2029';
+
 interface ResumeModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -45,7 +47,7 @@ Email: ${PERSONAL_DETAILS.email} | Phone: ${PERSONAL_DETAILS.phone}
 GitHub: ${PERSONAL_DETAILS.githubUrl} | LinkedIn: ${PERSONAL_DETAILS.linkedinUrl}
 
 EDUCATION:
-- Bachelor of Technology (CSE), Symbiosis Institute of Technology (SIT), Pune (2022-2026) | 8.8 CGPA
+- Bachelor of Technology (CSE), Symbiosis Institute of Technology (SIT), Pune (${educationDuration}) | 8.8 CGPA
 - +2 Higher Secondary Science, Model Multiple College, Nepal (2020-2022) | 3.72 GPA
 
 SKILLS:

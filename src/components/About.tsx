@@ -14,13 +14,14 @@ import {
   Coffee,
   CheckCircle2
 } from 'lucide-react';
-import { PERSONAL_DETAILS } from '../data/portfolioData';
+import { EDUCATION_DATA, PERSONAL_DETAILS } from '../data/portfolioData';
 
 interface AboutProps {
   onOpenResume: () => void;
 }
 
 export const About: React.FC<AboutProps> = ({ onOpenResume }) => {
+  const educationDuration = EDUCATION_DATA[0]?.duration || '2025 - 2029';
   const [timeMode, setTimeMode] = useState<'IST' | 'NST'>('IST');
   const [currentTime, setCurrentTime] = useState('');
 
@@ -92,7 +93,7 @@ export const About: React.FC<AboutProps> = ({ onOpenResume }) => {
                 </div>
 
                 <span className="hidden sm:inline-block px-3 py-1 rounded-full text-xs font-mono bg-green-950/80 border border-green-500/40 text-green-400">
-                  Batch 2022-2026
+                  Batch {educationDuration}
                 </span>
               </div>
 

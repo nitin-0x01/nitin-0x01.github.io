@@ -15,7 +15,7 @@ import {
   ExternalLink,
   Zap
 } from 'lucide-react';
-import { PERSONAL_DETAILS } from '../data/portfolioData';
+import { EDUCATION_DATA, PERSONAL_DETAILS } from '../data/portfolioData';
 import { ProfileAvatar } from './ui/ProfileAvatar';
 
 interface HeroProps {
@@ -29,6 +29,8 @@ export const Hero: React.FC<HeroProps> = ({
   onOpenResume,
   onOpenTerminal
 }) => {
+  const educationDuration = EDUCATION_DATA[0]?.duration || '2025 - 2029';
+
   // Role typewriter rotator
   const [roleIndex, setRoleIndex] = useState(0);
   const [displayText, setDisplayText] = useState('');
@@ -125,7 +127,7 @@ export const Hero: React.FC<HeroProps> = ({
             </div>
             <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-gray-900/80 border border-gray-800">
               <Zap className="w-3.5 h-3.5 text-yellow-400" />
-              <span>B.Tech CSE (2022 - 2026)</span>
+              <span>B.Tech CSE ({educationDuration})</span>
             </div>
           </motion.div>
 
