@@ -1,16 +1,18 @@
 import React from 'react';
 import { motion } from 'motion/react';
 import { Activity, Code2, GitCommit, Trophy, Coffee, Clock } from 'lucide-react';
-import { PERSONAL_DETAILS } from '../data/portfolioData';
+import { STATS_DATA } from '../data/portfolioData';
 
 export const StatsDashboard: React.FC = () => {
+  const stats = STATS_DATA || {};
+
   const statItems = [
-    { label: 'Projects Completed', value: `${PERSONAL_DETAILS.stats.projectsCompleted}+`, icon: Code2, color: 'text-purple-400' },
-    { label: 'Commits in 2024', value: `${PERSONAL_DETAILS.stats.commitsThisYear}+`, icon: GitCommit, color: 'text-cyan-300' },
-    { label: 'LeetCode Solved', value: `${PERSONAL_DETAILS.stats.problemsSolved}+`, icon: Activity, color: 'text-yellow-400' },
-    { label: 'Hackathons Won', value: `${PERSONAL_DETAILS.stats.hackathonsWon}`, icon: Trophy, color: 'text-green-400' },
-    { label: 'Cups of Coffee', value: `${PERSONAL_DETAILS.stats.coffeeCups}+`, icon: Coffee, color: 'text-amber-400' },
-    { label: 'Hours Coded', value: `${PERSONAL_DETAILS.stats.hoursCoded}+`, icon: Clock, color: 'text-blue-400' }
+    { label: 'Projects Completed', value: `${stats?.projectsCompleted ?? 6}+`, icon: Code2, color: 'text-purple-400' },
+    { label: 'Commits in 2024', value: `${stats?.githubContributions ?? 250}+`, icon: GitCommit, color: 'text-cyan-300' },
+    { label: 'LeetCode Solved', value: `${stats?.yearsExperience ?? 2}+`, icon: Activity, color: 'text-yellow-400' },
+    { label: 'Technologies Mastered', value: `${stats?.technologiesMastered ?? 12}`, icon: Trophy, color: 'text-green-400' },
+    { label: 'Cups of Coffee', value: `${stats?.projectsCompleted ?? 6}+`, icon: Coffee, color: 'text-amber-400' },
+    { label: 'Years Experience', value: `${stats?.yearsExperience ?? 2}+`, icon: Clock, color: 'text-blue-400' }
   ];
 
   return (

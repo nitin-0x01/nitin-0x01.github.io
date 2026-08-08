@@ -161,6 +161,13 @@ export const EXPERIENCE_DATA = [
 
 export const EXPERIENCE = EXPERIENCE_DATA;
 
+export const STATS_DATA = {
+  projectsCompleted: 6,
+  yearsExperience: 2,
+  githubContributions: 250,
+  technologiesMastered: 12
+};
+
 export const CERTIFICATES_DATA = [];
 export const CODING_PROFILES_DATA = [];
 export const TESTIMONIALS_DATA = [];
@@ -175,3 +182,4 @@ export const PROJECTS = PROJECTS_DATA;
 export const EDUCATION = EDUCATION_DATA;
 export const ACHIEVEMENTS = ACHIEVEMENTS_DATA;
 export const CERTIFICATES = CERTIFICATES_DATA;
+export const STATS = STATS_DATA;
