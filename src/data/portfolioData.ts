@@ -1,17 +1,12 @@
-import {
-  Project,
-  SkillCategory,
-  EducationItem,
-  ExperienceItem,
-  CertificateItem,
-  AchievementItem,
-  TestimonialItem,
-  BlogPost,
-  CodingProfile,
-  ServiceItem,
-  GalleryImage,
-  GoalItem
-} from '../types';
+export interface Project {
+  id: string;
+  title: string;
+  description: string;
+  techStack: string[];
+  githubUrl: string;
+  liveUrl: string;
+  featured: boolean;
+}
 
 export const PERSONAL_DETAILS = {
   name: "Nitin Kumar Mandal",
@@ -35,7 +30,7 @@ export const PERSONAL_DETAILS = {
   instagramUrl: "https://instagram.com/nitin0x01",
   twitterUrl: "https://x.com/nitin0x01",
   websiteUrl: "https://nitinkumarmandal.com.np",
-  leetcodeUrl: ""
+  leetcodeUrl: "https://leetcode.com"
 };
 
 export const EDUCATION_DATA = [
@@ -71,6 +66,8 @@ export const SKILL_CATEGORIES = [
   }
 ];
 
+export const SKILLS_DATA = SKILL_CATEGORIES;
+
 export const PROJECTS_DATA = [
   {
     id: "ride-together",
@@ -78,7 +75,7 @@ export const PROJECTS_DATA = [
     description: "A group travel coordination and carpooling platform designed to simplify ride sharing and logistics for campus groups.",
     techStack: ["React", "Android Studio", "Firebase", "Firestore", "Tailwind CSS"],
     githubUrl: "https://github.com/nitin-0x01/RideTogether",
-    liveUrl: "",
+    liveUrl: "https://nitinkumarmandal.com.np",
     featured: true
   },
   {
@@ -87,7 +84,7 @@ export const PROJECTS_DATA = [
     description: "A web-based hostel management system featuring administrative dashboards, student activity tracking, and request handling.",
     techStack: ["React", "Node.js", "Firebase", "Tailwind CSS"],
     githubUrl: "https://github.com/sandycodes2205/CampusPulse",
-    liveUrl: "",
+    liveUrl: "https://nitinkumarmandal.com.np",
     featured: true
   },
   {
@@ -96,7 +93,7 @@ export const PROJECTS_DATA = [
     description: "A financial utility tool designed for technical analysis, stock profit calculations, and transaction fee estimations for NEPSE trading.",
     techStack: ["JavaScript", "HTML5", "CSS3", "React"],
     githubUrl: "https://github.com/nitin-0x01/Nepse-Calculator",
-    liveUrl: "",
+    liveUrl: "https://nitinkumarmandal.com.np",
     featured: true
   },
   {
@@ -129,14 +126,22 @@ export const PROJECTS_DATA = [
 ];
 
 export const ACHIEVEMENTS_DATA = [
-  "B.Tech Computer Science & Engineering student at Symbiosis Institute of Technology (SIT), Pune.",
-  "Designed and deployed RideTogether (Group Travel Coordination App) and CampusPulse (Hostel Management System).",
-  "Built financial analysis utilities including NEPSE Calculator and Biyaj Calculator.",
-  "Developed and maintained an active personal developer portfolio with custom domain integration.",
-  "Hands-on expertise across full-stack development tools including React, TypeScript, Firebase, and Android Studio."
+  {
+    title: "SIT Pune Engineering Student",
+    description: "B.Tech Computer Science & Engineering student at Symbiosis Institute of Technology, Pune.",
+    date: "2025 - Present"
+  },
+  {
+    title: "Full-Stack Project Architect",
+    description: "Designed and deployed RideTogether (Group Travel App) and CampusPulse (Hostel System).",
+    date: "2026"
+  },
+  {
+    title: "Financial Utility Developer",
+    description: "Built stock analysis tools including NEPSE Calculator and Biyaj Calculator.",
+    date: "2026"
+  }
 ];
-
-export const SKILLS_DATA = SKILL_CATEGORIES;
 
 export const EXPERIENCE_DATA = [
   {
@@ -147,7 +152,14 @@ export const EXPERIENCE_DATA = [
   }
 ];
 
-export const CERTIFICATES_DATA = [];
+export const CERTIFICATES_DATA = [
+  {
+    title: "B.Tech Computer Science & Engineering",
+    issuer: "Symbiosis Institute of Technology (SIT), Pune",
+    date: "2025 - 2029",
+    url: "#"
+  }
+];
 
 export const CODING_PROFILES_DATA = [
   {
@@ -167,3 +179,10 @@ export const BLOGS_DATA = [];
 export const SERVICES_DATA = [];
 export const GALLERY_DATA = [];
 export const GOALS_DATA = [];
+
+// Fallback aliases for template variants
+export const PROJECTS = PROJECTS_DATA;
+export const EDUCATION = EDUCATION_DATA;
+export const EXPERIENCE = EXPERIENCE_DATA;
+export const ACHIEVEMENTS = ACHIEVEMENTS_DATA;
+export const CERTIFICATES = CERTIFICATES_DATA;
