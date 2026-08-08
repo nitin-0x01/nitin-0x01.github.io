@@ -148,3 +148,22 @@ export const EXPERIENCE_DATA = [
 ];
 
 export const CERTIFICATES_DATA = [];
+
+export const CODING_PROFILES_DATA = [
+  {
+    platform: "GitHub",
+    username: "nitin-0x01",
+    url: "https://github.com/nitin-0x01"
+  },
+  {
+    platform: "LeetCode",
+    username: "nitin-0x01",
+    url: "https://leetcode.com"
+  }
+];
+
+export const TESTIMONIALS_DATA = [];
+export const BLOGS_DATA = [];
+export const SERVICES_DATA = [];
+export const GALLERY_DATA = [];
+export const GOALS_DATA = [];
