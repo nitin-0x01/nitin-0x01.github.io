@@ -11,6 +11,7 @@ export interface Project {
 export const PERSONAL_DETAILS = {
   name: "Nitin Kumar Mandal",
   profileImage: "/profilepic.jpeg",
+  statusMessage: "Available for Projects & Collaboration",
   roles: [
     "Computer Science Engineering Student",
     "Full-Stack Web Developer",
@@ -176,7 +177,6 @@ export const SERVICES_DATA = [];
 export const GALLERY_DATA = [];
 export const GOALS_DATA = [];
 
-// Fallback exports required by some template components
 export const SKILLS_DATA = SKILL_CATEGORIES;
 export const PROJECTS = PROJECTS_DATA;
 export const EDUCATION = EDUCATION_DATA;
