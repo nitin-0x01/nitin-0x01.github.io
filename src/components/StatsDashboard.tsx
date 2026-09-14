@@ -1,47 +1,66 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { Activity, Code2, GitCommit, Trophy, Coffee, Clock } from 'lucide-react';
-import { STATS_DATA } from '../data/portfolioData';
+import { FolderGit2, CalendarCheck, GitCommit, Cpu } from 'lucide-react';
+import { usePortfolio } from '../context/PortfolioContext';
 
 export const StatsDashboard: React.FC = () => {
-  const stats = STATS_DATA || {};
+  const { data } = usePortfolio();
+  const stats = data.stats;
 
   const statItems = [
-    { label: 'Projects Completed', value: `${stats?.projectsCompleted ?? 6}+`, icon: Code2, color: 'text-purple-400' },
-    { label: 'Commits in 2024', value: `${stats?.githubContributions ?? 250}+`, icon: GitCommit, color: 'text-cyan-300' },
-    { label: 'LeetCode Solved', value: `${stats?.yearsExperience ?? 2}+`, icon: Activity, color: 'text-yellow-400' },
-    { label: 'Technologies Mastered', value: `${stats?.technologiesMastered ?? 12}`, icon: Trophy, color: 'text-green-400' },
-    { label: 'Cups of Coffee', value: `${stats?.projectsCompleted ?? 6}+`, icon: Coffee, color: 'text-amber-400' },
-    { label: 'Years Experience', value: `${stats?.yearsExperience ?? 2}+`, icon: Clock, color: 'text-blue-400' }
+    {
+      label: 'Projects Built',
+      value: stats.projectsCompleted ? `${stats.projectsCompleted}+` : '6+',
+      icon: FolderGit2,
+      color: '#8b5cf6'
+    },
+    {
+      label: 'Years Coding',
+      value: stats.yearsExperience ? `${stats.yearsExperience}+` : '2+',
+      icon: CalendarCheck,
+      color: '#06b6d4'
+    },
+    {
+      label: 'GitHub Contributions',
+      value: stats.githubContributions ? `${stats.githubContributions}+` : '250+',
+      icon: GitCommit,
+      color: '#10b981'
+    },
+    {
+      label: 'Tech Mastered',
+      value: stats.technologiesMastered ? `${stats.technologiesMastered}+` : '12+',
+      icon: Cpu,
+      color: '#f59e0b'
+    }
   ];
 
   return (
-    <section className="py-16 relative z-10 overflow-hidden">
+    <section className="py-12 relative z-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-gradient-to-r from-purple-950/40 via-gray-950 to-indigo-950/40 border border-purple-500/30 rounded-3xl p-8 backdrop-blur-xl shadow-[0_0_50px_rgba(139,92,246,0.2)]">
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 text-center">
-            {statItems.map((item, index) => {
-              const IconComp = item.icon;
-              return (
-                <motion.div
-                  key={item.label}
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: index * 0.08 }}
-                  className="space-y-2 p-3 rounded-2xl bg-gray-900/60 border border-gray-800"
-                >
-                  <IconComp className={`w-5 h-5 mx-auto ${item.color}`} />
-                  <div className={`text-2xl sm:text-3xl font-black font-mono ${item.color}`}>
-                    {item.value}
-                  </div>
-                  <div className="text-[11px] font-mono text-gray-400">
-                    {item.label}
-                  </div>
-                </motion.div>
-              );
-            })}
-          </div>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
+          {statItems.map((item, index) => {
+            const Icon = item.icon;
+            return (
+              <motion.div
+                key={item.label}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: index * 0.1 }}
+                className="p-6 bg-gray-950/70 border border-purple-500/20 rounded-3xl backdrop-blur-xl text-center space-y-2 hover:border-purple-500/50 transition shadow-[0_0_20px_rgba(0,0,0,0.4)]"
+              >
+                <div className="w-10 h-10 mx-auto rounded-xl bg-gray-900 border border-gray-800 flex items-center justify-center">
+                  <Icon className="w-5 h-5" style={{ color: item.color }} />
+                </div>
+                <div className="text-2xl sm:text-4xl font-black font-mono text-white">
+                  {item.value}
+                </div>
+                <div className="text-xs text-gray-400 font-mono">
+                  {item.label}
+                </div>
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </section>
