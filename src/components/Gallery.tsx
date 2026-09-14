@@ -3,9 +3,24 @@ import { motion, AnimatePresence } from 'motion/react';
 import { Camera, X, Calendar, MapPin } from 'lucide-react';
 import { GALLERY_DATA } from '../data/portfolioData';
 import { GalleryImage } from '../types';
+import { usePortfolio } from '../context/PortfolioContext';
 
 export const Gallery: React.FC = () => {
+  const { data } = usePortfolio();
   const [activeImage, setActiveImage] = useState<GalleryImage | null>(null);
+
+  // Use dynamic gallery from Firestore if populated, otherwise fall back to local defaults
+  const remoteGallery = (data as any)?.gallery;
+  const activeGallery: GalleryImage[] = Array.isArray(remoteGallery) && remoteGallery.length > 0
+    ? remoteGallery.map((item: any, idx: number) => ({
+        id: item.id || `gallery-item-${idx}`,
+        title: item.title || 'Campus Moment',
+        imageUrl: item.imageUrl || item.url || 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1200&q=80',
+        category: item.category || 'Campus Life',
+        date: item.date || 'Recent',
+        caption: item.caption || item.description || ''
+      }))
+    : GALLERY_DATA;
 
   return (
     <section id="gallery" className="py-24 relative z-10 overflow-hidden">
@@ -26,9 +41,9 @@ export const Gallery: React.FC = () => {
 
         {/* Gallery Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {GALLERY_DATA.map((item, index) => (
+          {activeGallery.map((item, index) => (
             <motion.div
-              key={item.id}
+              key={item.id || index}
               initial={{ opacity: 0, scale: 0.9 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
@@ -40,6 +55,10 @@ export const Gallery: React.FC = () => {
                 src={item.imageUrl}
                 alt={item.title}
                 className="w-full h-full object-cover group-hover:scale-110 transition duration-500"
+                onError={(e) => {
+                  (e.target as HTMLImageElement).src =
+                    'https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1200&q=80';
+                }}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-gray-950 via-gray-950/30 to-transparent opacity-80 group-hover:opacity-90 transition" />
 
@@ -91,10 +110,12 @@ export const Gallery: React.FC = () => {
               <div className="p-6 bg-gray-950 space-y-2">
                 <div className="flex items-center justify-between text-xs text-purple-400 font-mono">
                   <span>{activeImage.category}</span>
-                  <span>{activeImage.date}</span>
+                  {activeImage.date && <span>{activeImage.date}</span>}
                 </div>
                 <h3 className="text-xl font-bold text-white">{activeImage.title}</h3>
-                <p className="text-xs text-gray-300">{activeImage.caption}</p>
+                {activeImage.caption && (
+                  <p className="text-xs text-gray-300">{activeImage.caption}</p>
+                )}
               </div>
             </motion.div>
           </div>
