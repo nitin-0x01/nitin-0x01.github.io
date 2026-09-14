@@ -17,6 +17,7 @@ import {
 } from 'lucide-react';
 import { EDUCATION_DATA, PERSONAL_DETAILS } from '../data/portfolioData';
 import { ProfileAvatar } from './ui/ProfileAvatar';
+import { usePortfolio } from '../context/PortfolioContext';
 
 interface HeroProps {
   onNavigate: (sectionId: string) => void;
@@ -29,6 +30,17 @@ export const Hero: React.FC<HeroProps> = ({
   onOpenResume,
   onOpenTerminal
 }) => {
+  const { data } = usePortfolio();
+
+  // Dynamic values with fallback to default portfolio data
+  const displayName = data?.fullName || PERSONAL_DETAILS.name;
+  const displayTagline = data?.tagline || PERSONAL_DETAILS.tagline;
+
+  // Dynamic roles rotator: uses tagline if available, else static list
+  const activeRoles = data?.tagline 
+    ? [data.tagline, ...PERSONAL_DETAILS.roles.filter(r => r !== data.tagline)]
+    : PERSONAL_DETAILS.roles;
+
   const educationDuration = EDUCATION_DATA[0]?.duration || '2025 - 2029';
 
   // Role typewriter rotator
@@ -37,7 +49,7 @@ export const Hero: React.FC<HeroProps> = ({
   const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
-    const currentRole = PERSONAL_DETAILS.roles[roleIndex];
+    const currentRole = activeRoles[roleIndex % activeRoles.length];
     const typingSpeed = isDeleting ? 40 : 80;
 
     const timer = setTimeout(() => {
@@ -45,7 +57,7 @@ export const Hero: React.FC<HeroProps> = ({
         setTimeout(() => setIsDeleting(true), 1800);
       } else if (isDeleting && displayText === '') {
         setIsDeleting(false);
-        setRoleIndex((prev) => (prev + 1) % PERSONAL_DETAILS.roles.length);
+        setRoleIndex((prev) => (prev + 1) % activeRoles.length);
       } else {
         setDisplayText(
           currentRole.substring(0, isDeleting ? displayText.length - 1 : displayText.length + 1)
@@ -54,7 +66,7 @@ export const Hero: React.FC<HeroProps> = ({
     }, typingSpeed);
 
     return () => clearTimeout(timer);
-  }, [displayText, isDeleting, roleIndex]);
+  }, [displayText, isDeleting, roleIndex, activeRoles]);
 
   return (
     <section id="hero" className="relative min-h-screen flex items-center justify-center pt-24 pb-16 overflow-hidden">
@@ -90,7 +102,7 @@ export const Hero: React.FC<HeroProps> = ({
               Hello World, I&apos;m
             </div>
             <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black text-white tracking-tight leading-tight">
-              {PERSONAL_DETAILS.name}
+              {displayName}
             </h1>
 
             {/* Typewriter Role */}
@@ -109,7 +121,7 @@ export const Hero: React.FC<HeroProps> = ({
             transition={{ duration: 0.5, delay: 0.2 }}
             className="text-gray-300 text-base sm:text-lg max-w-2xl mx-auto lg:mx-0 leading-relaxed"
           >
-            &quot;{PERSONAL_DETAILS.tagline}&quot; — CS Engineering student at{' '}
+            &quot;{displayTagline}&quot; — CS Engineering student at{' '}
             <span className="text-purple-300 font-semibold">{PERSONAL_DETAILS.institute}</span>, originating from{' '}
             <span className="text-cyan-300 font-semibold">{PERSONAL_DETAILS.hometown}</span>. Crafting futuristic full-stack web applications, smooth motion systems, and algorithmic software.
           </motion.p>
@@ -209,14 +221,14 @@ export const Hero: React.FC<HeroProps> = ({
           </motion.div>
         </div>
 
-        {/* Right Column Interactive Avatar & Orbiting Icons */}
+        {/* Right Column Interactive Avatar */}
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.7, delay: 0.2 }}
           className="lg:col-span-5 flex justify-center relative"
         >
-          <ProfileAvatar />
+          <ProfileAvatar customAvatarUrl={data?.avatarUrl} />
         </motion.div>
       </div>
 
