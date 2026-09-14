@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { PortfolioProvider } from './context/PortfolioContext';
+
 import { LoadingScreen } from './components/ui/LoadingScreen';
 import { StarfieldCanvas } from './components/3d/StarfieldCanvas';
 import { CustomCursor } from './components/ui/CustomCursor';
@@ -94,122 +96,124 @@ export default function App() {
   };
 
   return (
-    <div className={`min-h-screen font-sans selection:bg-purple-500 selection:text-white ${
-      themeMode === 'dark' ? 'bg-[#030712] text-white' : 'bg-slate-50 text-slate-900'
-    }`}>
-      {/* Boot Preloader */}
-      {loading && <LoadingScreen onComplete={() => setLoading(false)} />}
+    <PortfolioProvider>
+      <div className={`min-h-screen font-sans selection:bg-purple-500 selection:text-white ${
+        themeMode === 'dark' ? 'bg-[#030712] text-white' : 'bg-slate-50 text-slate-900'
+      }`}>
+        {/* Boot Preloader */}
+        {loading && <LoadingScreen onComplete={() => setLoading(false)} />}
 
-      {/* Custom Trailing Cursor */}
-      <CustomCursor />
+        {/* Custom Trailing Cursor */}
+        <CustomCursor />
 
-      {/* 3D WebGL Starfield Particle Canvas */}
-      <StarfieldCanvas themeMode={themeMode} />
+        {/* 3D WebGL Starfield Particle Canvas */}
+        <StarfieldCanvas themeMode={themeMode} />
 
-      {/* Sticky Glass Navbar */}
-      <Navbar
-        activeSection={activeSection}
-        onNavigate={handleNavigate}
-        onOpenCommandPalette={() => setIsCommandPaletteOpen(true)}
-        onOpenTerminal={() => setIsTerminalOpen(true)}
-        onOpenResume={() => setIsResumeOpen(true)}
-        themeMode={themeMode}
-        toggleTheme={toggleTheme}
-        soundEnabled={soundEnabled}
-        toggleSound={toggleSound}
-        currentLang={currentLang}
-        setLanguage={setCurrentLang}
-      />
-
-      {/* Main Sections Stack */}
-      <main className="relative z-10 space-y-8">
-        <Hero
+        {/* Sticky Glass Navbar */}
+        <Navbar
+          activeSection={activeSection}
           onNavigate={handleNavigate}
-          onOpenResume={() => setIsResumeOpen(true)}
+          onOpenCommandPalette={() => setIsCommandPaletteOpen(true)}
           onOpenTerminal={() => setIsTerminalOpen(true)}
+          onOpenResume={() => setIsResumeOpen(true)}
+          themeMode={themeMode}
+          toggleTheme={toggleTheme}
+          soundEnabled={soundEnabled}
+          toggleSound={toggleSound}
+          currentLang={currentLang}
+          setLanguage={setCurrentLang}
         />
 
-        <About onOpenResume={() => setIsResumeOpen(true)} />
+        {/* Main Sections Stack */}
+        <main className="relative z-10 space-y-8">
+          <Hero
+            onNavigate={handleNavigate}
+            onOpenResume={() => setIsResumeOpen(true)}
+            onOpenTerminal={() => setIsTerminalOpen(true)}
+          />
 
-        <Education />
+          <About onOpenResume={() => setIsResumeOpen(true)} />
 
-        <Skills />
+          <Education />
 
-        <Projects onSelectProject={(p) => setSelectedProject(p)} />
+          <Skills />
 
-        <ExperienceTimeline />
+          <Projects onSelectProject={(p) => setSelectedProject(p)} />
 
-        <Achievements />
+          <ExperienceTimeline />
 
-        <Certificates onSelectCertificate={(c) => setSelectedCertificate(c)} />
+          <Achievements />
 
-        <GitHubSection />
+          <Certificates onSelectCertificate={(c) => setSelectedCertificate(c)} />
 
-        <CodingProfiles />
+          <GitHubSection />
 
-        <Services onOpenQuoteBuilder={() => setIsQuoteBuilderOpen(true)} />
+          <CodingProfiles />
 
-        <Goals />
+          <Services onOpenQuoteBuilder={() => setIsQuoteBuilderOpen(true)} />
 
-        <Testimonials />
+          <Goals />
 
-        <Blogs onSelectBlog={(b) => setSelectedBlog(b)} />
+          <Testimonials />
 
-        <Gallery />
+          <Blogs onSelectBlog={(b) => setSelectedBlog(b)} />
 
-        <StatsDashboard />
+          <Gallery />
 
-        <Contact initialMessage={contactInitialMsg} />
-      </main>
+          <StatsDashboard />
 
-      {/* Footer */}
-      <Footer onNavigate={handleNavigate} />
+          <Contact initialMessage={contactInitialMsg} />
+        </main>
 
-      {/* Modals Orchestration */}
-      <CommandPalette
-        isOpen={isCommandPaletteOpen}
-        onClose={() => setIsCommandPaletteOpen(false)}
-        onNavigate={handleNavigate}
-        onOpenTerminal={() => setIsTerminalOpen(true)}
-        onOpenResume={() => setIsResumeOpen(true)}
-        toggleTheme={toggleTheme}
-        themeMode={themeMode}
-      />
+        {/* Footer */}
+        <Footer onNavigate={handleNavigate} />
 
-      <TerminalModal
-        isOpen={isTerminalOpen}
-        onClose={() => setIsTerminalOpen(false)}
-        onNavigate={handleNavigate}
-      />
+        {/* Modals Orchestration */}
+        <CommandPalette
+          isOpen={isCommandPaletteOpen}
+          onClose={() => setIsCommandPaletteOpen(false)}
+          onNavigate={handleNavigate}
+          onOpenTerminal={() => setIsTerminalOpen(true)}
+          onOpenResume={() => setIsResumeOpen(true)}
+          toggleTheme={toggleTheme}
+          themeMode={themeMode}
+        />
 
-      <ResumeModal
-        isOpen={isResumeOpen}
-        onClose={() => setIsResumeOpen(false)}
-      />
+        <TerminalModal
+          isOpen={isTerminalOpen}
+          onClose={() => setIsTerminalOpen(false)}
+          onNavigate={handleNavigate}
+        />
 
-      <ProjectModal
-        project={selectedProject}
-        onClose={() => setSelectedProject(null)}
-      />
+        <ResumeModal
+          isOpen={isResumeOpen}
+          onClose={() => setIsResumeOpen(false)}
+        />
 
-      <BlogModal
-        post={selectedBlog}
-        onClose={() => setSelectedBlog(null)}
-      />
+        <ProjectModal
+          project={selectedProject}
+          onClose={() => setSelectedProject(null)}
+        />
 
-      <CertificateModal
-        certificate={selectedCertificate}
-        onClose={() => setSelectedCertificate(null)}
-      />
+        <BlogModal
+          post={selectedBlog}
+          onClose={() => setSelectedBlog(null)}
+        />
 
-      <QuoteBuilderModal
-        isOpen={isQuoteBuilderOpen}
-        onClose={() => setIsQuoteBuilderOpen(false)}
-        onOpenContactWithDetails={(details) => {
-          setContactInitialMsg(details);
-          handleNavigate('contact');
-        }}
-      />
-    </div>
+        <CertificateModal
+          certificate={selectedCertificate}
+          onClose={() => setSelectedCertificate(null)}
+        />
+
+        <QuoteBuilderModal
+          isOpen={isQuoteBuilderOpen}
+          onClose={() => setIsQuoteBuilderOpen(false)}
+          onOpenContactWithDetails={(details) => {
+            setContactInitialMsg(details);
+            handleNavigate('contact');
+          }}
+        />
+      </div>
+    </PortfolioProvider>
   );
 }
