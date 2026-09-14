@@ -6,29 +6,69 @@ import {
   ExternalLink,
   Github,
   Star,
-  GitFork,
-  CheckCircle,
-  Eye,
-  Code2
+  Eye
 } from 'lucide-react';
 import { PROJECTS_DATA } from '../data/portfolioData';
 import { Project } from '../types';
+import { usePortfolio } from '../context/PortfolioContext';
 
 interface ProjectsProps {
   onSelectProject: (project: Project) => void;
 }
 
 export const Projects: React.FC<ProjectsProps> = ({ onSelectProject }) => {
+  const { data } = usePortfolio();
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [searchQuery, setSearchQuery] = useState('');
 
-  const categories = ['All', 'Full Stack', 'Frontend', 'AI / ML', 'Backend / API', 'Open Source'];
+  // Fallback default projects
+  let activeProjects: Project[] = PROJECTS_DATA;
 
-  const filteredProjects = PROJECTS_DATA.filter(p => {
+  // Convert Firestore projects into the format expected by the UI
+  if (data?.projects && Array.isArray(data.projects) && data.projects.length > 0) {
+    activeProjects = data.projects.map((proj: any, idx: number) => {
+      // Find matching local project to retain rich fields (images, details) if available
+      const localMatch = PROJECTS_DATA.find(
+        (p) => p.title.toLowerCase() === (proj.title || '').toLowerCase()
+      );
+
+      const technologies = Array.isArray(proj.tags)
+        ? proj.tags
+        : typeof proj.tags === 'string'
+        ? proj.tags.split(',').map((t: string) => t.trim()).filter(Boolean)
+        : (localMatch?.technologies || ['Full Stack']);
+
+      return {
+        id: localMatch?.id || `fs-proj-${idx}`,
+        title: proj.title || 'Untitled Project',
+        tagline: proj.description || localMatch?.tagline || 'Engineered with modern full-stack architectures.',
+        description: proj.description || localMatch?.description || '',
+        category: localMatch?.category || 'Full Stack',
+        image: proj.image || proj.imageUrl || localMatch?.image || 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=1200&q=80',
+        technologies,
+        demoUrl: proj.liveLink || proj.demoUrl || localMatch?.demoUrl,
+        githubUrl: proj.githubLink || proj.githubUrl || localMatch?.githubUrl,
+        stars: localMatch?.stars ?? 12,
+        featured: true,
+        features: localMatch?.features || ['Production Scalable', 'Cloud Hosted', 'Secure Architecture'],
+        challenges: localMatch?.challenges || 'Optimized database queries and refined responsive UI/UX flow.',
+        role: localMatch?.role || 'Lead Engineer'
+      } as Project;
+    });
+  }
+
+  // Derive unique categories dynamically
+  const dynamicCategories = Array.from(new Set(activeProjects.map((p) => p.category).filter(Boolean)));
+  const categories = ['All', ...dynamicCategories];
+
+  const filteredProjects = activeProjects.filter((p) => {
     const matchesCategory = selectedCategory === 'All' || p.category === selectedCategory;
-    const matchesSearch = p.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                          p.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                          p.technologies.some(t => t.toLowerCase().includes(searchQuery.toLowerCase()));
+    const matchesSearch =
+      p.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      p.tagline.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      (p.description && p.description.toLowerCase().includes(searchQuery.toLowerCase())) ||
+      p.technologies.some((t) => t.toLowerCase().includes(searchQuery.toLowerCase()));
+
     return matchesCategory && matchesSearch;
   });
 
@@ -45,7 +85,7 @@ export const Projects: React.FC<ProjectsProps> = ({ onSelectProject }) => {
             Projects <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-cyan-300 to-blue-500">Showcase</span>
           </h2>
           <p className="text-gray-400 text-sm sm:text-base max-w-2xl mx-auto">
-            A collection of production full-stack web applications, AI tools, and open-source contributions crafted with React, Node, WebSockets & Docker.
+            A collection of production full-stack web applications, AI tools, and open-source contributions crafted with modern engineering architectures.
           </p>
         </div>
 
@@ -85,7 +125,7 @@ export const Projects: React.FC<ProjectsProps> = ({ onSelectProject }) => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredProjects.map((project, index) => (
             <motion.div
-              key={project.id}
+              key={project.id || `proj-${index}`}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -93,11 +133,16 @@ export const Projects: React.FC<ProjectsProps> = ({ onSelectProject }) => {
               className="group bg-gray-950/70 border border-purple-500/20 hover:border-purple-500/60 rounded-3xl overflow-hidden backdrop-blur-xl transition duration-300 shadow-[0_0_30px_rgba(0,0,0,0.5)] flex flex-col justify-between hover:-translate-y-2"
             >
               {/* Project Image Box */}
-              <div className="relative h-52 w-full overflow-hidden">
+              <div className="relative h-52 w-full overflow-hidden bg-gray-900">
                 <img
                   src={project.image}
                   alt={project.title}
                   className="w-full h-full object-cover group-hover:scale-110 transition duration-500"
+                  onError={(e) => {
+                    // Fallback thumbnail if custom image link fails
+                    (e.target as HTMLImageElement).src =
+                      'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=1200&q=80';
+                  }}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-gray-950 via-gray-950/30 to-transparent" />
 
@@ -108,7 +153,7 @@ export const Projects: React.FC<ProjectsProps> = ({ onSelectProject }) => {
                   </span>
                 </div>
 
-                {/* Stars / Forks */}
+                {/* Stars */}
                 {project.stars !== undefined && (
                   <div className="absolute top-4 right-4 flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-gray-950/80 border border-gray-800 text-yellow-400 text-xs font-mono backdrop-blur-md">
                     <Star className="w-3.5 h-3.5 fill-yellow-400" />
