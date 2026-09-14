@@ -12,14 +12,15 @@ import {
   CheckCircle2
 } from 'lucide-react';
 import { SKILLS_DATA } from '../data/portfolioData';
+import { usePortfolio } from '../context/PortfolioContext';
 
 export const Skills: React.FC = () => {
+  const { data } = usePortfolio();
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [searchQuery, setSearchQuery] = useState('');
 
-  const categories = ['All', ...SKILLS_DATA.map((c) => c?.categoryName || c?.name || c?.category || 'General')];
-
-  const allSkills = SKILLS_DATA.flatMap((category) => {
+  // Default skills from local portfolioData
+  const defaultSkills = SKILLS_DATA.flatMap((category) => {
     const categoryName = category?.categoryName || category?.name || category?.category || 'General';
     const skills = Array.isArray(category?.skills) ? category.skills : [];
 
@@ -28,11 +29,40 @@ export const Skills: React.FC = () => {
       categoryName,
       name: skill?.name || '',
       level: Number(skill?.level ?? 0),
-      experience: skill?.experience || 'Learning',
+      experience: skill?.experience || 'Proficient',
       color: skill?.color || '#8b5cf6',
       popular: Boolean(skill?.popular)
     }));
   });
+
+  // Dynamic skills from Firestore (Admin Portal)
+  let allSkills = defaultSkills;
+  if (data?.skills && Array.isArray(data.skills) && data.skills.length > 0) {
+    const defaultMap = new Map(defaultSkills.map(s => [s.name.toLowerCase(), s]));
+
+    allSkills = data.skills.map((skillItem, index) => {
+      const trimmed = typeof skillItem === 'string' ? skillItem.trim() : '';
+      const existing = defaultMap.get(trimmed.toLowerCase());
+
+      if (existing) {
+        return existing;
+      }
+
+      // Default attributes for freshly added skills via Admin panel
+      const colors = ['#8b5cf6', '#06b6d4', '#3b82f6', '#10b981', '#ec4899'];
+      return {
+        name: trimmed,
+        categoryName: 'Tech Stack',
+        level: 90,
+        experience: 'Production',
+        color: colors[index % colors.length],
+        popular: true
+      };
+    });
+  }
+
+  // Extract unique category tabs
+  const categories = ['All', ...Array.from(new Set(allSkills.map((s) => s.categoryName || 'General')))];
 
   const filteredSkills = allSkills.filter((skill) => {
     const skillName = (skill?.name || '').toLowerCase();
@@ -126,7 +156,7 @@ export const Skills: React.FC = () => {
                           </span>
                         )}
                       </h3>
-                      <p className="text-xs text-gray-400 font-mono">{skill?.experience || 'Learning'}</p>
+                      <p className="text-xs text-gray-400 font-mono">{skill?.experience || 'Proficient'}</p>
                     </div>
                   </div>
 
@@ -147,7 +177,7 @@ export const Skills: React.FC = () => {
 
                 <div className="flex justify-between items-center text-[11px] text-gray-500 font-mono">
                   <span>Category: {skill?.categoryName || 'General'}</span>
-                  <span className="text-purple-400 font-semibold">Proficient</span>
+                  <span className="text-purple-400 font-semibold">Verified</span>
                 </div>
               </motion.div>
             );
