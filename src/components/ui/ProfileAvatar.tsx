@@ -14,7 +14,7 @@ export const ProfileAvatar: React.FC<ProfileAvatarProps> = ({
   showBadges = true,
   imageUrl
 }) => {
-  const displayImage = imageUrl || PERSONAL_DETAILS.profileImage;
+  const displayImage = imageUrl || '/profilepic.jpg';
   const [imageError, setImageError] = useState(false);
   // 4 unique theme modes that the user can cycle through to give a "unique edited" look
   const [activeTheme, setActiveTheme] = useState<'cyber' | 'hologram' | 'gold' | 'matrix'>('cyber');
