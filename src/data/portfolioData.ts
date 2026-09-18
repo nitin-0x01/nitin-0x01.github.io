@@ -1,96 +1,298 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
-import { initializeApp } from 'firebase/app';
-import { getFirestore, doc, onSnapshot } from 'firebase/firestore';
-import {
-  PERSONAL_DETAILS,
-  EDUCATION_DATA,
-  SKILL_CATEGORIES,
-  PROJECTS_DATA,
-  ACHIEVEMENTS_DATA,
-  EXPERIENCE_DATA,
-  STATS_DATA
-} from '../data/portfolioData';
-
-const firebaseConfig = {
-  apiKey: "AIzaSyCeudq7kNL0NzHZKDthknc7UC0QFCzxr5Y",
-  authDomain: "portfolio-admin-4a3bd.firebaseapp.com",
-  projectId: "portfolio-admin-4a3bd",
-  storageBucket: "portfolio-admin-4a3bd.firebasestorage.app",
-  messagingSenderId: "803002632579",
-  appId: "1:803002632579:web:e2097d3ddc6add99360eb6"
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-
-export interface PortfolioSchema {
-  personal: typeof PERSONAL_DETAILS;
-  education: typeof EDUCATION_DATA;
-  skills: typeof SKILL_CATEGORIES;
-  projects: typeof PROJECTS_DATA;
-  achievements: typeof ACHIEVEMENTS_DATA;
-  experience: typeof EXPERIENCE_DATA;
-  stats: typeof STATS_DATA;
+export interface Project {
+  id: string;
+  title: string;
+  description: string;
+  techStack: string[];
+  githubUrl: string;
+  liveUrl: string;
+  featured: boolean;
 }
 
-interface PortfolioContextType {
-  data: PortfolioSchema;
-  loading: boolean;
-}
+export const PERSONAL_DETAILS = {
+  name: "Nitin Kumar Mandal",
 
-const defaultPortfolio: PortfolioSchema = {
-  personal: PERSONAL_DETAILS,
-  education: EDUCATION_DATA,
-  skills: SKILL_CATEGORIES,
-  projects: PROJECTS_DATA,
-  achievements: ACHIEVEMENTS_DATA,
-  experience: EXPERIENCE_DATA,
-  stats: STATS_DATA
+  // NEW PROFILE PHOTO
+  profileImage: "/profilepic.jpg",
+
+  statusMessage: "Available for Projects & Collaboration",
+
+  roles: [
+    "Computer Science Engineering Student",
+    "Full-Stack Web Developer",
+    "AI & Cybersecurity Enthusiast"
+  ],
+
+  tagline: "Building Ideas Into Reality.",
+
+  bio: "I am Nitin Kumar Mandal, a Computer Science & Engineering student at Symbiosis Institute of Technology (SIT), Pune. I am passionate about building web applications, exploring AI and cybersecurity, and turning ideas into practical digital solutions.",
+
+  hometown: "Janakpur, Dhanusha, Nepal",
+  currentLocation: "Pune, Maharashtra, India",
+
+  institute: "Symbiosis Institute of Technology (SIT), Pune",
+
+  degree: "Bachelor of Technology in Computer Science & Engineering",
+
+  email: "er.nitinkumar217@gmail.com",
+  phone: "+977 9817885318",
+
+  githubUsername: "nitin-0x01",
+  githubUrl: "https://github.com/nitin-0x01",
+
+  linkedinUrl: "https://www.linkedin.com/in/nitin-mandal-tech",
+
+  instagramUrl: "https://instagram.com/nitin0x01",
+
+  twitterUrl: "https://x.com/nitin0x01",
+
+  websiteUrl: "https://nitinkumarmandal.com.np",
+
+  leetcodeUrl: "https://leetcode.com"
 };
 
-const PortfolioContext = createContext<PortfolioContextType>({
-  data: defaultPortfolio,
-  loading: true
-});
+export const EDUCATION_DATA = [
+  {
+    institution: "Symbiosis Institute of Technology (SIT), Pune",
+    degree: "B.Tech in Computer Science & Engineering",
+    duration: "2025 - 2029",
+    description:
+      "Focusing on Software Engineering, Web Development, Algorithmic Foundations, Artificial Intelligence, and Cybersecurity.",
+    status: "In Progress",
 
-export const PortfolioProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [data, setData] = useState<PortfolioSchema>(defaultPortfolio);
-  const [loading, setLoading] = useState(true);
+    courses: [
+      "Data Structures & Algorithms",
+      "Object Oriented Programming (Java/C++)",
+      "Database Management Systems"
+    ],
 
-  useEffect(() => {
-    const unsub = onSnapshot(doc(db, "portfolio_data", "main"), (docSnap) => {
-      if (docSnap.exists()) {
-        const remote = docSnap.data();
-        setData({
-          personal: remote.personal ? { ...defaultPortfolio.personal, ...remote.personal } : (remote.fullName ? {
-            ...defaultPortfolio.personal,
-            name: remote.fullName,
-            tagline: remote.tagline || defaultPortfolio.personal.tagline,
-            bio: remote.bio || defaultPortfolio.personal.bio,
-            profileImage: remote.avatarUrl || defaultPortfolio.personal.profileImage
-          } : defaultPortfolio.personal),
-          education: remote.education && remote.education.length > 0 ? remote.education : defaultPortfolio.education,
-          skills: remote.skillsCategorized || defaultPortfolio.skills,
-          projects: remote.projects && remote.projects.length > 0 ? remote.projects : defaultPortfolio.projects,
-          achievements: remote.achievements || defaultPortfolio.achievements,
-          experience: remote.experience || defaultPortfolio.experience,
-          stats: remote.stats || defaultPortfolio.stats
-        });
-      }
-      setLoading(false);
-    }, (err) => {
-      console.error("Firestore Listen Error:", err);
-      setLoading(false);
-    });
+    highlights: [
+      "Core Computer Science & Engineering Curriculum",
+      "Symbiosis Institute of Technology (SIT), Pune"
+    ]
+  }
+];
 
-    return () => unsub();
-  }, []);
+export const SKILL_CATEGORIES = [
+  {
+    category: "Programming Languages",
+    name: "Programming Languages",
 
-  return (
-    <PortfolioContext.Provider value={{ data, loading }}>
-      {children}
-    </PortfolioContext.Provider>
-  );
+    skills: [
+      { name: "C", level: "Intermediate" },
+      { name: "C++", level: "Intermediate" },
+      { name: "Java", level: "Intermediate" },
+      { name: "Python", level: "Intermediate" },
+      { name: "JavaScript", level: "Advanced" },
+      { name: "TypeScript", level: "Intermediate" }
+    ],
+
+    items: [
+      "C",
+      "C++",
+      "Java",
+      "Python",
+      "JavaScript",
+      "TypeScript"
+    ]
+  },
+
+  {
+    category: "Web Development",
+    name: "Web Development",
+
+    skills: [
+      { name: "HTML5", level: "Advanced" },
+      { name: "CSS3", level: "Advanced" },
+      { name: "JavaScript", level: "Advanced" },
+      { name: "React", level: "Advanced" },
+      { name: "Node.js", level: "Intermediate" },
+      { name: "Tailwind CSS", level: "Advanced" }
+    ],
+
+    items: [
+      "HTML5",
+      "CSS3",
+      "JavaScript",
+      "React",
+      "Node.js",
+      "Tailwind CSS"
+    ]
+  },
+
+  {
+    category: "Tools & Technologies",
+    name: "Tools & Technologies",
+
+    skills: [
+      { name: "Git", level: "Advanced" },
+      { name: "GitHub", level: "Advanced" },
+      { name: "VS Code", level: "Advanced" },
+      { name: "Vite", level: "Intermediate" },
+      { name: "Firebase", level: "Intermediate" },
+      { name: "Android Studio", level: "Intermediate" }
+    ],
+
+    items: [
+      "Git",
+      "GitHub",
+      "VS Code",
+      "Vite",
+      "Firebase",
+      "Android Studio"
+    ]
+  },
+
+  {
+    category: "Databases",
+    name: "Databases",
+
+    skills: [
+      { name: "MySQL", level: "Intermediate" },
+      { name: "Firebase / Firestore", level: "Intermediate" },
+      { name: "MongoDB", level: "Learning" }
+    ],
+
+    items: [
+      "MySQL",
+      "Firebase / Firestore",
+      "MongoDB"
+    ]
+  }
+];
+
+export const PROJECTS_DATA = [
+  {
+    id: "ride-together",
+    title: "RideTogether",
+    description: "Group travel coordination and carpooling platform.",
+
+    techStack: [
+      "React",
+      "Android Studio",
+      "Firebase"
+    ],
+
+    technologies: [
+      "React",
+      "Android Studio",
+      "Firebase"
+    ],
+
+    githubUrl:
+      "https://github.com/nitin-0x01/RideTogether",
+
+    liveUrl:
+      "https://nitinkumarmandal.com.np",
+
+    featured: true
+  },
+
+  {
+    id: "campus-pulse",
+    title: "CampusPulse",
+    description: "Web-based hostel management system.",
+
+    techStack: [
+      "React",
+      "Node.js",
+      "Firebase",
+      "Tailwind"
+    ],
+
+    technologies: [
+      "React",
+      "Node.js",
+      "Firebase",
+      "Tailwind"
+    ],
+
+    githubUrl:
+      "https://github.com/sandycodes2205/CampusPulse",
+
+    liveUrl:
+      "https://nitinkumarmandal.com.np",
+
+    featured: true
+  },
+
+  {
+    id: "nepse-calculator",
+    title: "NEPSE Calculator",
+    description:
+      "Financial utility tool for NEPSE trading analysis.",
+
+    techStack: [
+      "JavaScript",
+      "HTML5",
+      "React"
+    ],
+
+    technologies: [
+      "JavaScript",
+      "HTML5",
+      "React"
+    ],
+
+    githubUrl:
+      "https://github.com/nitin-0x01/Nepse-Calculator",
+
+    liveUrl:
+      "https://nitinkumarmandal.com.np",
+
+    featured: true
+  }
+];
+
+export const ACHIEVEMENTS_DATA = [
+  {
+    title: "SIT Pune Engineering Student",
+    description: "B.Tech Computer Science & Engineering.",
+    date: "2025 - Present"
+  }
+];
+
+export const EXPERIENCE_DATA = [
+  {
+    company: "Academic Projects & Development",
+    role: "Full-Stack Developer",
+    duration: "2025 - Present",
+
+    description: [
+      "Architected and built full-stack applications including RideTogether, CampusPulse, and NEPSE Calculator.",
+      "Integrated React, Node.js, Firebase, and Tailwind CSS for scalable web and mobile solutions.",
+      "Engineered financial tools like Biyaj Calculator and custom campus portals."
+    ],
+
+    technologies: [
+      "React",
+      "TypeScript",
+      "Firebase",
+      "Node.js",
+      "Tailwind CSS"
+    ]
+  }
+];
+
+export const EXPERIENCE = EXPERIENCE_DATA;
+
+export const STATS_DATA = {
+  projectsCompleted: 6,
+  yearsExperience: 2,
+  githubContributions: 250,
+  technologiesMastered: 12
 };
 
-export const usePortfolio = () => useContext(PortfolioContext);
+export const CERTIFICATES_DATA = [];
+export const CODING_PROFILES_DATA = [];
+export const TESTIMONIALS_DATA = [];
+export const BLOGS_DATA = [];
+export const SERVICES_DATA = [];
+export const GALLERY_DATA = [];
+export const GOALS_DATA = [];
+
+export const SKILLS_DATA = SKILL_CATEGORIES;
+export const PROJECTS = PROJECTS_DATA;
+export const EDUCATION = EDUCATION_DATA;
+export const ACHIEVEMENTS = ACHIEVEMENTS_DATA;
+export const CERTIFICATES = CERTIFICATES_DATA;
+export const STATS = STATS_DATA;
