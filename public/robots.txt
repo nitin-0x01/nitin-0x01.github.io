@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://nitinkumarmandal.com.np/sitemap.xml
