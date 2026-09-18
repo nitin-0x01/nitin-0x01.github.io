@@ -37,7 +37,7 @@ export const Hero: React.FC<HeroProps> = ({
   const displayTagline = data?.tagline || PERSONAL_DETAILS.tagline;
 
   // Dynamic roles rotator: uses tagline if available, else static list
-  const activeRoles = data?.tagline 
+  const activeRoles = data?.tagline
     ? [data.tagline, ...PERSONAL_DETAILS.roles.filter(r => r !== data.tagline)]
     : PERSONAL_DETAILS.roles;
 
@@ -60,7 +60,12 @@ export const Hero: React.FC<HeroProps> = ({
         setRoleIndex((prev) => (prev + 1) % activeRoles.length);
       } else {
         setDisplayText(
-          currentRole.substring(0, isDeleting ? displayText.length - 1 : displayText.length + 1)
+          currentRole.substring(
+            0,
+            isDeleting
+              ? displayText.length - 1
+              : displayText.length + 1
+          )
         );
       }
     }, typingSpeed);
@@ -69,14 +74,19 @@ export const Hero: React.FC<HeroProps> = ({
   }, [displayText, isDeleting, roleIndex, activeRoles]);
 
   return (
-    <section id="hero" className="relative min-h-screen flex items-center justify-center pt-24 pb-16 overflow-hidden">
+    <section
+      id="hero"
+      className="relative min-h-screen flex items-center justify-center pt-24 pb-16 overflow-hidden"
+    >
       {/* Background glowing aurora blobs */}
       <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-600/20 rounded-full blur-[120px] pointer-events-none animate-pulse" />
       <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-600/20 rounded-full blur-[120px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+
         {/* Left Column Text Content */}
         <div className="lg:col-span-7 space-y-6 text-center lg:text-left">
+
           {/* Status Badge */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -88,6 +98,7 @@ export const Hero: React.FC<HeroProps> = ({
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
               <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500" />
             </span>
+
             <span>{PERSONAL_DETAILS.statusMessage}</span>
           </motion.div>
 
@@ -101,6 +112,7 @@ export const Hero: React.FC<HeroProps> = ({
             <div className="text-gray-400 font-mono text-sm sm:text-base">
               Hello World, I&apos;m
             </div>
+
             <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black text-white tracking-tight leading-tight">
               {displayName}
             </h1>
@@ -110,6 +122,7 @@ export const Hero: React.FC<HeroProps> = ({
               <span className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-cyan-300 to-blue-500">
                 {displayText}
               </span>
+
               <span className="w-1 h-8 sm:h-10 bg-cyan-400 ml-1 animate-pulse" />
             </div>
           </motion.div>
@@ -122,8 +135,15 @@ export const Hero: React.FC<HeroProps> = ({
             className="text-gray-300 text-base sm:text-lg max-w-2xl mx-auto lg:mx-0 leading-relaxed"
           >
             &quot;{displayTagline}&quot; — CS Engineering student at{' '}
-            <span className="text-purple-300 font-semibold">{PERSONAL_DETAILS.institute}</span>, originating from{' '}
-            <span className="text-cyan-300 font-semibold">{PERSONAL_DETAILS.hometown}</span>. Crafting futuristic full-stack web applications, smooth motion systems, and algorithmic software.
+            <span className="text-purple-300 font-semibold">
+              {PERSONAL_DETAILS.institute}
+            </span>
+            , originating from{' '}
+            <span className="text-cyan-300 font-semibold">
+              {PERSONAL_DETAILS.hometown}
+            </span>
+            . Crafting futuristic full-stack web applications, smooth motion
+            systems, and algorithmic software.
           </motion.p>
 
           {/* Location & University Badge */}
@@ -137,6 +157,7 @@ export const Hero: React.FC<HeroProps> = ({
               <MapPin className="w-3.5 h-3.5 text-purple-400" />
               <span>Pune, India & Janakpur, Nepal</span>
             </div>
+
             <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-gray-900/80 border border-gray-800">
               <Zap className="w-3.5 h-3.5 text-yellow-400" />
               <span>B.Tech CSE ({educationDuration})</span>
@@ -191,6 +212,7 @@ export const Hero: React.FC<HeroProps> = ({
             >
               <Github className="w-5 h-5 group-hover:text-purple-400" />
             </a>
+
             <a
               href={PERSONAL_DETAILS.linkedinUrl}
               target="_blank"
@@ -200,6 +222,7 @@ export const Hero: React.FC<HeroProps> = ({
             >
               <Linkedin className="w-5 h-5 group-hover:text-blue-400" />
             </a>
+
             <a
               href={PERSONAL_DETAILS.instagramUrl}
               target="_blank"
@@ -209,6 +232,7 @@ export const Hero: React.FC<HeroProps> = ({
             >
               <Instagram className="w-5 h-5 group-hover:text-pink-400" />
             </a>
+
             <a
               href={PERSONAL_DETAILS.leetcodeUrl}
               target="_blank"
@@ -228,13 +252,17 @@ export const Hero: React.FC<HeroProps> = ({
           transition={{ duration: 0.7, delay: 0.2 }}
           className="lg:col-span-5 flex justify-center relative"
         >
-          <ProfileAvatar customAvatarUrl={data?.avatarUrl} />
+          {/* FIXED: imageUrl instead of customAvatarUrl */}
+          <ProfileAvatar imageUrl={data?.avatarUrl} />
         </motion.div>
       </div>
 
       {/* Down Arrow Indicator */}
       <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-gray-500">
-        <span className="text-[10px] font-mono tracking-widest uppercase text-purple-400">Scroll to Explore</span>
+        <span className="text-[10px] font-mono tracking-widest uppercase text-purple-400">
+          Scroll to Explore
+        </span>
+
         <button
           onClick={() => onNavigate('about')}
           className="p-2 rounded-full border border-purple-500/30 text-purple-400 hover:border-purple-500 hover:text-white transition animate-bounce"
