@@ -15,7 +15,12 @@ import {
   ExternalLink,
   Zap
 } from 'lucide-react';
-import { EDUCATION_DATA, PERSONAL_DETAILS } from '../data/portfolioData';
+
+import {
+  EDUCATION_DATA,
+  PERSONAL_DETAILS
+} from '../data/portfolioData';
+
 import { ProfileAvatar } from './ui/ProfileAvatar';
 import { usePortfolio } from '../context/PortfolioContext';
 
@@ -33,15 +38,25 @@ export const Hero: React.FC<HeroProps> = ({
   const { data } = usePortfolio();
 
   // Dynamic values with fallback to default portfolio data
-  const displayName = data?.fullName || PERSONAL_DETAILS.name;
-  const displayTagline = data?.tagline || PERSONAL_DETAILS.tagline;
+  const displayName =
+    data?.personal?.name || PERSONAL_DETAILS.name;
 
-  // Dynamic roles rotator: uses tagline if available, else static list
-  const activeRoles = data?.tagline
-    ? [data.tagline, ...PERSONAL_DETAILS.roles.filter(r => r !== data.tagline)]
+  const displayTagline =
+    data?.personal?.tagline || PERSONAL_DETAILS.tagline;
+
+  // Dynamic roles rotator
+  const activeRoles = data?.personal?.tagline
+    ? [
+        data.personal.tagline,
+        ...PERSONAL_DETAILS.roles.filter(
+          (role) => role !== data.personal.tagline
+        )
+      ]
     : PERSONAL_DETAILS.roles;
 
-  const educationDuration = EDUCATION_DATA[0]?.duration || '2025 - 2029';
+  // Education duration
+  const educationDuration =
+    EDUCATION_DATA[0]?.duration || '2025 - 2029';
 
   // Role typewriter rotator
   const [roleIndex, setRoleIndex] = useState(0);
@@ -49,7 +64,9 @@ export const Hero: React.FC<HeroProps> = ({
   const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
-    const currentRole = activeRoles[roleIndex % activeRoles.length];
+    const currentRole =
+      activeRoles[roleIndex % activeRoles.length];
+
     const typingSpeed = isDeleting ? 40 : 80;
 
     const timer = setTimeout(() => {
@@ -57,7 +74,10 @@ export const Hero: React.FC<HeroProps> = ({
         setTimeout(() => setIsDeleting(true), 1800);
       } else if (isDeleting && displayText === '') {
         setIsDeleting(false);
-        setRoleIndex((prev) => (prev + 1) % activeRoles.length);
+
+        setRoleIndex(
+          (prev) => (prev + 1) % activeRoles.length
+        );
       } else {
         setDisplayText(
           currentRole.substring(
@@ -71,7 +91,12 @@ export const Hero: React.FC<HeroProps> = ({
     }, typingSpeed);
 
     return () => clearTimeout(timer);
-  }, [displayText, isDeleting, roleIndex, activeRoles]);
+  }, [
+    displayText,
+    isDeleting,
+    roleIndex,
+    activeRoles
+  ]);
 
   return (
     <section
@@ -80,6 +105,7 @@ export const Hero: React.FC<HeroProps> = ({
     >
       {/* Background glowing aurora blobs */}
       <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-600/20 rounded-full blur-[120px] pointer-events-none animate-pulse" />
+
       <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-600/20 rounded-full blur-[120px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
@@ -99,7 +125,9 @@ export const Hero: React.FC<HeroProps> = ({
               <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500" />
             </span>
 
-            <span>{PERSONAL_DETAILS.statusMessage}</span>
+            <span>
+              {PERSONAL_DETAILS.statusMessage}
+            </span>
           </motion.div>
 
           {/* Huge Main Headline */}
@@ -142,8 +170,8 @@ export const Hero: React.FC<HeroProps> = ({
             <span className="text-cyan-300 font-semibold">
               {PERSONAL_DETAILS.hometown}
             </span>
-            . Crafting futuristic full-stack web applications, smooth motion
-            systems, and algorithmic software.
+            . Crafting futuristic full-stack web applications,
+            smooth motion systems, and algorithmic software.
           </motion.p>
 
           {/* Location & University Badge */}
@@ -155,12 +183,18 @@ export const Hero: React.FC<HeroProps> = ({
           >
             <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-gray-900/80 border border-gray-800">
               <MapPin className="w-3.5 h-3.5 text-purple-400" />
-              <span>Pune, India & Janakpur, Nepal</span>
+
+              <span>
+                Pune, India & Janakpur, Nepal
+              </span>
             </div>
 
             <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-gray-900/80 border border-gray-800">
               <Zap className="w-3.5 h-3.5 text-yellow-400" />
-              <span>B.Tech CSE ({educationDuration})</span>
+
+              <span>
+                B.Tech CSE ({educationDuration})
+              </span>
             </div>
           </motion.div>
 
@@ -176,7 +210,10 @@ export const Hero: React.FC<HeroProps> = ({
               className="flex items-center gap-2.5 px-7 py-3.5 rounded-2xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-bold text-sm shadow-[0_0_25px_rgba(168,85,247,0.4)] hover:shadow-[0_0_35px_rgba(168,85,247,0.6)] hover:scale-105 transition duration-200"
             >
               <Mail className="w-4 h-4" />
-              <span>Get In Touch</span>
+
+              <span>
+                Get In Touch
+              </span>
             </button>
 
             <button
@@ -184,7 +221,10 @@ export const Hero: React.FC<HeroProps> = ({
               className="flex items-center gap-2.5 px-6 py-3.5 rounded-2xl bg-gray-900 hover:bg-gray-800 border border-purple-500/30 text-white font-bold text-sm hover:border-purple-500 transition hover:scale-105 duration-200"
             >
               <FileText className="w-4 h-4 text-purple-400" />
-              <span>View Resume PDF</span>
+
+              <span>
+                View Resume PDF
+              </span>
             </button>
 
             <button
@@ -203,6 +243,7 @@ export const Hero: React.FC<HeroProps> = ({
             transition={{ duration: 0.5, delay: 0.35 }}
             className="flex items-center justify-center lg:justify-start gap-3 pt-2"
           >
+            {/* GitHub */}
             <a
               href={PERSONAL_DETAILS.githubUrl}
               target="_blank"
@@ -213,6 +254,7 @@ export const Hero: React.FC<HeroProps> = ({
               <Github className="w-5 h-5 group-hover:text-purple-400" />
             </a>
 
+            {/* LinkedIn */}
             <a
               href={PERSONAL_DETAILS.linkedinUrl}
               target="_blank"
@@ -223,6 +265,7 @@ export const Hero: React.FC<HeroProps> = ({
               <Linkedin className="w-5 h-5 group-hover:text-blue-400" />
             </a>
 
+            {/* Instagram */}
             <a
               href={PERSONAL_DETAILS.instagramUrl}
               target="_blank"
@@ -233,6 +276,7 @@ export const Hero: React.FC<HeroProps> = ({
               <Instagram className="w-5 h-5 group-hover:text-pink-400" />
             </a>
 
+            {/* LeetCode */}
             <a
               href={PERSONAL_DETAILS.leetcodeUrl}
               target="_blank"
@@ -252,8 +296,12 @@ export const Hero: React.FC<HeroProps> = ({
           transition={{ duration: 0.7, delay: 0.2 }}
           className="lg:col-span-5 flex justify-center relative"
         >
-          {/* FIXED: imageUrl instead of customAvatarUrl */}
-          <ProfileAvatar imageUrl={data?.avatarUrl} />
+          <ProfileAvatar
+            imageUrl={
+              data?.personal?.profileImage ||
+              PERSONAL_DETAILS.profileImage
+            }
+          />
         </motion.div>
       </div>
 
