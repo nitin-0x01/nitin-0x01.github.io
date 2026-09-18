@@ -5,7 +5,6 @@ import {
   Zap,
   ShieldCheck,
   Code2,
-  Award,
   RefreshCw,
   Eye,
   Flame
@@ -606,22 +605,6 @@ export const ProfileAvatar: React.FC<ProfileAvatarProps> = ({
               </span>
             </motion.div>
 
-            {/* Hackathon Badge */}
-            <motion.div
-              animate={{ y: [-5, 5, -5] }}
-              transition={{
-                duration: 4.5,
-                repeat: Infinity,
-                ease: 'easeInOut'
-              }}
-              className="absolute top-1/2 -right-8 p-2.5 rounded-2xl bg-gray-950/90 border border-yellow-500/50 shadow-lg backdrop-blur-md text-yellow-300 font-mono text-xs font-bold flex items-center gap-1.5"
-            >
-              <Award className="w-4 h-4 text-yellow-400" />
-
-              <span>
-                Hackathon Gold
-              </span>
-            </motion.div>
           </>
         )}
       </div>
